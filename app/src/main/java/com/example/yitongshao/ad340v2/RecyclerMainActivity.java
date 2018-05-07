@@ -9,6 +9,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
+
 public class RecyclerMainActivity extends AppCompatActivity {
 
     Context context;
@@ -39,6 +41,10 @@ public class RecyclerMainActivity extends AppCompatActivity {
                     {"Shawn of the Dead", "2004", "Edgar Wright", "http://collider.com/wp-content/uploads/2014/10/shaun-of-the-dead-image.jpg", "When it comes to advancing the zombie movie genre, this film stands out among the crowd. It’s both a warm-blooded love letter to the history of zombie films and a stone-cold laugher that takes shots at those very same films. It helped quite a bit that Wright and Pegg enjoyed a shorthand from working together on the TV series Is It Bill Bailey? and Spaced before collaborating on what is arguably the best zombie comedy out there today.\nShaun of the Dead didn’t just take the zombie movie tropes and run with them, it allowed Wright’s meticulous attention to detail and brand of humor, complemented by Pegg’s delivery, to bubble to the surface. It’s one of the most re-watchable movies out there because you’ll always find something new that you may have missed dozens of times before. And once you’ve steeped yourself in the history of zombie films, you should also find that you have a new appreciation for just how lovingly Shaun of the Dead was put together. – Dave Trumbore"},
                     {"Dawn of the Dead", "1978", "George Romero", "http://collider.com/wp-content/uploads/2015/08/dawn-of-the-dead-romero.jpg", "George Romero didn’t invent the zombie, but he did single-handedly create the template for the modern zombie movie as we know it with his exquisite Night of the Living Dead. For his sequel, Romero dodged the temptation to retread familiar territory (a quality he would maintain for each of his subsequent “dead” films), ditching the intimate confines of a home for the sprawling reaches of a shopping mall, and trading his black-and-white bleakness for a playful color-saturated palette.\nDawn of the Dead is a horror sequel in every sense, bigger and bloodier, but it maintain’s Romero’s commitment to piercing social commentary, this time tackling the insatiable lust of American consumerism. It’s also packed to the brim with Romero’s skilled eye for visceral violence rendered with first-rate old-school gore effects from Tom Savini, the legendary craftsman of carnage who transplanted his experience as a combat photographer in Vietnam to a career spent creating on-screen nightmares. As in all of Romero’s great work, that beautifully executed bloodshed is only a backdrop for a compelling character drama as the group of strangers seeking refuge in the abandoned shopping complex cope with increasing interpersonal conflict. Romero directs it all with wit and empathy, and an expert eye for when to drop the next big scare. — Haleigh Foutch"}
             };
+    ArrayList<String> movie= additem.insert(bigList,0);
+    ArrayList<String> year=additem.insert(bigList,1);
+    ArrayList<String> dName=additem.insert(bigList,2);
+    ArrayList<String> summary=additem.insert(bigList,4);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +54,7 @@ public class RecyclerMainActivity extends AppCompatActivity {
         context = getApplicationContext();
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
-        mAdapter = new MainAdapter(bigList);
+        mAdapter= new MainAdapter (context, movie,year,dName,summary);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
 
