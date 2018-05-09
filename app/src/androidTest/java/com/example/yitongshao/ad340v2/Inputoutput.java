@@ -28,7 +28,7 @@ public class Inputoutput {
 
     @Test
     public void activityLaunch() {
-        Espresso.onView(ViewMatchers.withId(R.id.editText)).perform(ViewActions.click());
+        Espresso.onView(ViewMatchers.withId(R.id.send)).perform(ViewActions.click());
         Espresso.onView(ViewMatchers.withId(R.id.textView)).check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
         Espresso.onView(ViewMatchers.withId(R.id.one)).perform(ViewActions.click());
         Espresso.onView(ViewMatchers.withId(R.id.recycler_view)).check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
