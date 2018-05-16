@@ -47,7 +47,7 @@ public class CameraAdapter extends RecyclerView.Adapter <CameraAdapter.ViewHolde
     @Override
     public void onBindViewHolder(@NonNull CameraAdapter.ViewHolder holder, int position) {
 
-        holder.camname.setText( str.get(position).getCam_id());
+        holder.camname.setText( str.get(position).getDescription());
        Glide.with(context).load(str.get(position).getImageUrl()).into(holder.camimage);
     }
 

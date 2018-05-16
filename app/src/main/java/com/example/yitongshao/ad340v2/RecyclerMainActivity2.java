@@ -72,19 +72,17 @@ public class RecyclerMainActivity2 extends AppCompatActivity {
                                 url="http://images.wsdot.wa.gov/nw/"+url;
                             }
 
-                            cam.setCam_id(id);
-                            cam.setDescription(desc);
-                            cam.setImageUrl(url);
-                            cam.setType(type);
-                            str.add(cam);
+
+                            str.add(new Camera(id,desc,url,type));
                             Log.d("my tag",id);
 
                         }
-                        //myAdapter= new CameraAdapter(getApplicationContext(),str);
-                        myRecyclerView.setAdapter(myAdapter);
-                       // myAdapter.notifyDataSetChanged();
+
 
                     }
+                    myAdapter.notifyDataSetChanged();
+                    myAdapter= new CameraAdapter(RecyclerMainActivity2.this,str);
+                    myRecyclerView.setAdapter(myAdapter);
 
 
 
