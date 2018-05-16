@@ -27,7 +27,7 @@ public class MainAdapter extends RecyclerView.Adapter <MainAdapter.ViewHolder> {
     }
     @NonNull
     @Override
-    public MainAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.list,parent,false);
 
         return new ViewHolder(view);
@@ -43,7 +43,7 @@ public class MainAdapter extends RecyclerView.Adapter <MainAdapter.ViewHolder> {
         return movie.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView name;
         public ViewHolder(View itemView) {
             super(itemView);

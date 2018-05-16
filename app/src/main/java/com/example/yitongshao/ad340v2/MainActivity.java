@@ -14,13 +14,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
 
 import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
     public static final String EXTRA_MESSAGE = "com.example.MyAD340.MESSAGE";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +49,7 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-    }
+        }
 
     @Override
     public void onBackPressed() {
@@ -119,9 +122,9 @@ public class MainActivity extends AppCompatActivity
         Intent intent = new Intent(this, RecyclerMainActivity.class);
         startActivity(intent);
     }
-    public void toastB(View view) {
-        Toast.makeText(getApplicationContext(), "0_o Hello World1",
-                Toast.LENGTH_SHORT).show();
+    public void liveCam(View view) {
+        Intent intent = new Intent(this, RecyclerMainActivity2.class);
+        startActivity(intent);
     }
     public void toastC(View view) {
         Toast.makeText(getApplicationContext(), "0_o Hello World2",
