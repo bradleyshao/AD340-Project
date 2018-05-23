@@ -18,6 +18,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.maps.model.LatLng;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -59,6 +60,8 @@ public class RecyclerMainActivity2 extends AppCompatActivity {
                     JSONArray features = response.getJSONArray("Features");
                     for(int i=0;i<features.length();i++) {
                         JSONObject obj= features.getJSONObject(i);
+                        LatLng latLng = new LatLng(obj.getJSONArray("PointCoordinate").getDouble(0),
+                                obj.getJSONArray("PointCoordinate").getDouble(1));
                         JSONArray camera = obj.getJSONArray("Cameras");
                         for(int j=0;j<camera.length();j++){
                             String id = camera.getJSONObject(j).getString("Id");
@@ -73,7 +76,7 @@ public class RecyclerMainActivity2 extends AppCompatActivity {
                             }
 
 
-                            str.add(new Camera(id,desc,url,type));
+                            str.add(new Camera(latLng,id,desc,url,type));
                             Log.d("my tag",id);
 
                         }

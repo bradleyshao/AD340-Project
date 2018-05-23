@@ -1,6 +1,9 @@
 package com.example.yitongshao.ad340v2;
 
+import com.google.android.gms.maps.model.LatLng;
+
 public class Camera {
+    private LatLng latLng;
     private String cam_id;
     private  String description;
     private String imageUrl;
@@ -8,12 +11,21 @@ public class Camera {
 
     public Camera(){}
 
-    public Camera( String cam_id,String description,String imageUrl,String type){
+    public Camera(LatLng latLng, String cam_id,String description,String imageUrl,String type){
+        this.latLng=latLng;
         this.cam_id=cam_id;
         this.description=description;
         this.imageUrl=imageUrl;
         this.type=type;
 
+    }
+
+    public LatLng getLatLng() {
+        return latLng;
+    }
+
+    public void setLatLng(LatLng latLng) {
+        this.latLng = latLng;
     }
 
     public String getCam_id() {

@@ -71,8 +71,8 @@
         <Button
             android:id="@+id/three"
             android:layout_row="0"
-            android:onClick="toastC"
-            android:text="@string/_3" />
+            android:onClick="location"
+            android:text="@string/location" />
 
         <Button
             android:id="@+id/four"

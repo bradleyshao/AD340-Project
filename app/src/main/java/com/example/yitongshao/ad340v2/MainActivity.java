@@ -93,6 +93,12 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_movielist) {
             Intent intent = new Intent(this, RecyclerMainActivity.class);
             startActivity(intent);
+        }else if (id == R.id.traffic_cam) {
+            Intent intent = new Intent(this, RecyclerMainActivity2.class);
+            startActivity(intent);
+        }else if (id == R.id.locations) {
+            Intent intent = new Intent(this, location.class);
+            startActivity(intent);
         } else if (id == R.id.nav_about) {
             Intent intent = new Intent(this, about.class);
             startActivity(intent);
@@ -126,9 +132,9 @@ public class MainActivity extends AppCompatActivity
         Intent intent = new Intent(this, RecyclerMainActivity2.class);
         startActivity(intent);
     }
-    public void toastC(View view) {
-        Toast.makeText(getApplicationContext(), "0_o Hello World2",
-                Toast.LENGTH_SHORT).show();
+    public void location(View view) {
+        Intent intent = new Intent(this, location.class);
+        startActivity(intent);
     }
     public void toastD(View view) {
         Toast.makeText(getApplicationContext(), "0_o Hello World3",
