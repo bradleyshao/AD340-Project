@@ -3,7 +3,8 @@ package com.example.yitongshao.ad340v2;
 import com.google.android.gms.maps.model.LatLng;
 
 public class Camera {
-    private LatLng latLng;
+    private double lat;
+    private double lng;
     private String cam_id;
     private  String description;
     private String imageUrl;
@@ -11,8 +12,9 @@ public class Camera {
 
     public Camera(){}
 
-    public Camera(LatLng latLng, String cam_id,String description,String imageUrl,String type){
-        this.latLng=latLng;
+    public Camera(double lat,double lng, String cam_id,String description,String imageUrl,String type){
+        this.lat=lat;
+        this.lng=lng;
         this.cam_id=cam_id;
         this.description=description;
         this.imageUrl=imageUrl;
@@ -20,12 +22,20 @@ public class Camera {
 
     }
 
-    public LatLng getLatLng() {
-        return latLng;
+    public double getLat() {
+        return lat;
     }
 
-    public void setLatLng(LatLng latLng) {
-        this.latLng = latLng;
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+
+    public double getLng() {
+        return lng;
+    }
+
+    public void setLng(double lng) {
+        this.lng = lng;
     }
 
     public String getCam_id() {

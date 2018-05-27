@@ -60,8 +60,9 @@ public class RecyclerMainActivity2 extends AppCompatActivity {
                     JSONArray features = response.getJSONArray("Features");
                     for(int i=0;i<features.length();i++) {
                         JSONObject obj= features.getJSONObject(i);
-                        LatLng latLng = new LatLng(obj.getJSONArray("PointCoordinate").getDouble(0),
-                                obj.getJSONArray("PointCoordinate").getDouble(1));
+                        JSONArray coordinates = obj.getJSONArray("PointCoordinate");
+                        double lat= coordinates.getDouble(0);
+                        double lng = coordinates.getDouble(1);
                         JSONArray camera = obj.getJSONArray("Cameras");
                         for(int j=0;j<camera.length();j++){
                             String id = camera.getJSONObject(j).getString("Id");
@@ -76,7 +77,7 @@ public class RecyclerMainActivity2 extends AppCompatActivity {
                             }
 
 
-                            str.add(new Camera(latLng,id,desc,url,type));
+                            str.add(new Camera(lat,lng,id,desc,url,type));
                             Log.d("my tag",id);
 
                         }

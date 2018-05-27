@@ -31,6 +31,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONArray;
@@ -56,43 +57,6 @@ public class location extends AppCompatActivity  implements OnMapReadyCallback {
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.current_location);
         mapFragment.getMapAsync(this);
-        mQueue = Volley.newRequestQueue(this);
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            JSONArray features = response.getJSONArray("Features");
-                            for (int i = 0; i < features.length(); i++) {
-                                JSONObject obj = features.getJSONObject(i);
-                                LatLng latLng = new LatLng(obj.getJSONArray("PointCoordinate").getDouble(0),
-                                        obj.getJSONArray("PointCoordinate").getDouble(1));
-                                JSONArray camera = obj.getJSONArray("Cameras");
-                                for (int j = 0; j < camera.length(); j++) {
-                                    String id = camera.getJSONObject(j).getString("Id");
-                                    String desc = camera.getJSONObject(j).getString("Description");
-                                    String url = camera.getJSONObject(j).getString("ImageUrl");
-                                    String type = camera.getJSONObject(j).getString("Type");
-
-                                    if (type.equals("sdot")) {
-                                        url = "http://www.seattle.gov/trafficcams/images/" + url;
-                                    } else if (type.equals("wsdot")) {
-                                        url = "http://images.wsdot.wa.gov/nw/" + url;
-                                    }
-                                    cameras.add(new Camera(latLng, id, desc, url, type));
-                                }
-
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-            }
-        });
-        mQueue.add(request);
 
     }
 
@@ -108,17 +72,58 @@ public class location extends AppCompatActivity  implements OnMapReadyCallback {
         mMap.setOnMyLocationButtonClickListener(onMyLocationButtonClickListener);
         mMap.setOnMyLocationClickListener(onMyLocationClickListener);
         enableMyLocationIfPermitted();
-
         mMap.getUiSettings().setZoomControlsEnabled(true);
         mMap.setMinZoomPreference(10);
-        for(int i=0;i<cameras.size();i++)    {
-            Camera c = cameras.get(i);
-            mMap.addMarker(new MarkerOptions()
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
-                    .title(c.getDescription())
-                    .snippet(null)
-                    .position(c.getLatLng()));
-        }
+        mQueue = Volley.newRequestQueue(this);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JSONArray features = response.getJSONArray("Features");
+                            for (int i = 0; i < features.length(); i++) {
+                                JSONObject obj = features.getJSONObject(i);
+                                JSONArray coordinates = obj.getJSONArray("PointCoordinate");
+                                double lat= coordinates.getDouble(0);
+                                double lng = coordinates.getDouble(1);
+                                JSONArray camera = obj.getJSONArray("Cameras");
+                                for (int j = 0; j < camera.length(); j++) {
+                                    String id = camera.getJSONObject(j).getString("Id");
+                                    String desc = camera.getJSONObject(j).getString("Description");
+                                    String url = camera.getJSONObject(j).getString("ImageUrl");
+                                    String type = camera.getJSONObject(j).getString("Type");
+
+                                    if (type.equals("sdot")) {
+                                        url = "http://www.seattle.gov/trafficcams/images/" + url;
+                                    } else if (type.equals("wsdot")) {
+                                        url = "http://images.wsdot.wa.gov/nw/" + url;
+                                    }
+                                    cameras.add(new Camera(lat,lng, id, desc, url, type));
+                                    LatLng latlng = new LatLng(lat,lng);
+                                    MarkerOptions markerOptions = new MarkerOptions();
+                                    markerOptions.position(latlng).title(desc);
+                                    camUrl cam_url=new camUrl();
+                                    cam_url.setcamURL(url);
+                                    MarkerInfoWindowAdapter mkAdapter = new MarkerInfoWindowAdapter(location.this);
+                                    mMap.setInfoWindowAdapter(mkAdapter);
+                                    Marker m = mMap.addMarker(markerOptions);
+                                    m.setTag(desc);
+                                    m.showInfoWindow();
+                                }
+
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        });
+        mQueue.add(request);
+
+
     }
     private void enableMyLocationIfPermitted() {
         if (ContextCompat.checkSelfPermission(this,
@@ -179,11 +184,10 @@ public class location extends AppCompatActivity  implements OnMapReadyCallback {
                     circleOptions.center(new LatLng(location.getLatitude(),
                             location.getLongitude()));
 
-                    circleOptions.radius(200);
-                    circleOptions.fillColor(Color.RED);
-                    circleOptions.strokeWidth(6);
 
                     mMap.addCircle(circleOptions);
+                    Toast.makeText(getApplicationContext(), "My current location",
+                            Toast.LENGTH_SHORT).show();
                 }
             };
 
