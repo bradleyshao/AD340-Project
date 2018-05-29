@@ -1,6 +1,7 @@
 package com.example.yitongshao.ad340v2;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -44,6 +45,7 @@ public class RecyclerMainActivity extends AppCompatActivity {
     ArrayList<String> movie= additem.insert(bigList,0);
     ArrayList<String> year=additem.insert(bigList,1);
     ArrayList<String> dName=additem.insert(bigList,2);
+    ArrayList<String> mUrl= additem.insert(bigList,3);
     ArrayList<String> summary=additem.insert(bigList,4);
 
     @Override
@@ -54,9 +56,10 @@ public class RecyclerMainActivity extends AppCompatActivity {
         context = getApplicationContext();
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
-        mAdapter= new MainAdapter (context, movie,year,dName,summary);
+        mAdapter= new MainAdapter (context, movie,year,dName,summary,mUrl);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setLayoutManager (new LinearLayoutManager (this));
 
     }
 

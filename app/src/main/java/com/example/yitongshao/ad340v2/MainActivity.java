@@ -136,9 +136,9 @@ public class MainActivity extends AppCompatActivity
         Intent intent = new Intent(this, location.class);
         startActivity(intent);
     }
-    public void toastD(View view) {
-        Toast.makeText(getApplicationContext(), "0_o Hello World3",
-                Toast.LENGTH_SHORT).show();
+    public void about(View view) {
+        Intent intent = new Intent(this, about.class);
+        startActivity(intent);
     }
 
 
