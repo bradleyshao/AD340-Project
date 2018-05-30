@@ -1,6 +1,8 @@
 package com.example.yitongshao.ad340v2;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -25,12 +27,21 @@ import static android.provider.AlarmClock.EXTRA_MESSAGE;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     public static final String EXTRA_MESSAGE = "com.example.MyAD340.MESSAGE";
+    private SharedPreferences mSharedP;
+    private SharedPreferencesHelper mSharedPH;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        mSharedP = this.getPreferences(Context.MODE_PRIVATE);
+        mSharedPH = new SharedPreferencesHelper(mSharedP);
+        EditText editText = findViewById(R.id.editText);
+        editText.setText( mSharedPH.getEntry());
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -118,11 +129,23 @@ public class MainActivity extends AppCompatActivity
 
     public void sendMessage(View view){
 
-        Intent intent = new Intent(this, DisplayMessageActivity.class);
         EditText editText = (EditText) findViewById(R.id.editText);
         String message = editText.getText().toString();
-        intent.putExtra(EXTRA_MESSAGE, message);
-        startActivity(intent);
+        if (checkInput(message)) {
+            mSharedPH.saveEntry (message);
+            Intent intent = new Intent (this, DisplayMessageActivity.class);
+
+            intent.putExtra (EXTRA_MESSAGE, message);
+            startActivity (intent);
+        }
+    }
+
+    public boolean checkInput(String message) {
+        if(message.length() == 0){
+            return false;
+        }
+        return true;
+
     }
     public void showList(View view) {
         Intent intent = new Intent(this, RecyclerMainActivity.class);
